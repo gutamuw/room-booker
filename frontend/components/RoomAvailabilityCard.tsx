@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
-import { RoomAvailability } from "../../src/hooks/useGetAvailability";
+import { RoomAvailability } from "../src/hooks/useGetAvailability";
 import DayColumn from "./DayColumn";
 
 interface Props {

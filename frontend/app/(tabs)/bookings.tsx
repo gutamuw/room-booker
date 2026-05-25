@@ -2,8 +2,8 @@ import { useState } from "react";
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
 import { router } from "expo-router";
 import useGetAvailability from "../../src/hooks/useGetAvailability";
-import DateNavigator from "../components/DateNavigator";
-import RoomAvailabilityCard from "../components/RoomAvailabilityCard";
+import DateNavigator from "../../components/DateNavigator";
+import RoomAvailabilityCard from "../../components/RoomAvailabilityCard";
 
 const WINDOW_SIZE = 3;
 
