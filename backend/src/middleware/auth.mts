@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import admin from "../config/firebase.mjs";
 
-export interface AuthRequest extends Request {
+export interface AuthRequest<P = Record<string, string>> extends Request<P> {
     uid?: string;
 }
 

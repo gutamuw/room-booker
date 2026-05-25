@@ -1,28 +1,19 @@
 import { Router } from "express";
 import Booking from "../models/booking.mts";
-import { createBooking, getAllBookingsByRoomId } from "../controllers/bookingController.mts";
+import { createBooking, deleteBooking, getAllBookings, getAllBookingsByRoomId } from "../controllers/bookingController.mts";
+import { verifyToken } from "../middleware/auth.mts";
 
 const router = Router();
 
+router.get("/", verifyToken, getAllBookings);
+
 // get all bookings for a room
-router.get("/:roomId", getAllBookingsByRoomId);
+router.get("/:roomId", verifyToken ,getAllBookingsByRoomId);
 
 // create booking
-router.post("/:roomId", createBooking);
+router.post("/:roomId", verifyToken, createBooking);
 
 // delete booking
-router.delete("/:id", async (req, res) => {
-    const { id } = req.params;
-
-    try {
-        await Booking.findByIdAndDelete(id);
-        res.status(200).json({ message: "Booking deleted successfully" });
-
-    } catch (error) {
-        console.error("Error deleting booking:", error);
-        res.status(500).json({ message: "Internal server error" });
-    }
-
-});
+router.delete("/:id", verifyToken, deleteBooking)
 
 export default router;
