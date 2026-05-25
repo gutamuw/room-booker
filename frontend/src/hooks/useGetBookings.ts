@@ -6,7 +6,7 @@ const useGetBookings = () => {
     const query = useQuery({
         queryKey: ["bookings"],
         queryFn: async () => {
-            return apiFetch("/bookings");
+            return apiFetch("/bookings/me");
         }
     })
 

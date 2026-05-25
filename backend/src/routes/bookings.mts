@@ -1,14 +1,15 @@
 import { Router } from "express";
 import Booking from "../models/booking.mts";
-import { createBooking, deleteBooking, getAllBookings, getAllBookingsByRoomId } from "../controllers/bookingController.mts";
+import { createBooking, deleteBooking, getMyBookings, getAvailability } from "../controllers/bookingController.mts";
 import { verifyToken } from "../middleware/auth.mts";
 
 const router = Router();
 
-router.get("/", verifyToken, getAllBookings);
+// get all bookings for the authenticated user
+router.get("/me", verifyToken, getMyBookings);
 
-// get all bookings for a room
-router.get("/:roomId", verifyToken ,getAllBookingsByRoomId);
+// availability across rooms within a date range
+router.get("/availability", verifyToken, getAvailability);
 
 // create booking
 router.post("/:roomId", verifyToken, createBooking);
