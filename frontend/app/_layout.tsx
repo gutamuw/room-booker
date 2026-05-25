@@ -32,7 +32,7 @@ function AuthGate() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="login" />
       <Stack.Screen name="(tabs)" />
-      <Stack.Screen name="booking/[roomId]" options={{ headerShown: true, title: "Boka rum" }} />
+      <Stack.Screen name="booking/[roomId]" options={{ headerShown: true, title: "Boka rum", headerBackTitle: "Tillbaka" }} />
       <Stack.Screen name="booking/result" options={{ headerShown: true, title: "Bokning bekräftad" }} />
     </Stack>
   );
