@@ -12,17 +12,17 @@ export default function LoginScreen() {
       { email, password },
       {
         onError: (err) =>
-          Alert.alert("Login failed", err instanceof Error ? err.message : "Unknown error"),
+          Alert.alert("Inloggning misslyckades", err instanceof Error ? err.message : "Okänt fel"),
       },
     );
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Logga in</Text>
       <TextInput
         style={styles.input}
-        placeholder="Email"
+        placeholder="E-post"
         autoCapitalize="none"
         keyboardType="email-address"
         value={email}
@@ -30,13 +30,13 @@ export default function LoginScreen() {
       />
       <TextInput
         style={styles.input}
-        placeholder="Password"
+        placeholder="Lösenord"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
       />
       <Button
-        title={login.isPending ? "Logging in..." : "Login"}
+        title={login.isPending ? "Loggar in..." : "Logga in"}
         onPress={handleLogin}
         disabled={login.isPending}
       />

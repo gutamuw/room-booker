@@ -22,7 +22,7 @@ export default function BookingsScreen() {
   if (error || !data) {
     return (
       <View style={styles.center}>
-        <Text>Could not load availability.</Text>
+        <Text>Kunde inte ladda tillgänglighet.</Text>
       </View>
     );
   }
@@ -37,7 +37,6 @@ export default function BookingsScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Available bookings</Text>
       <DateNavigator
         fromDate={fromDate}
         toDate={toDate}

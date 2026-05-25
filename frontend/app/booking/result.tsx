@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 export default function ResultScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Booking confirmed</Text>
+      <Text style={styles.title}>Bokning bekräftad</Text>
     </View>
   );
 }

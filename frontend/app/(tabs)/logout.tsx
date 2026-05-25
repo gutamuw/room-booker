@@ -8,10 +8,10 @@ export default function LogoutScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Logged in as</Text>
+      <Text style={styles.title}>Inloggad som</Text>
       <Text style={styles.name}>{user?.name ?? "—"}</Text>
       <Button
-        title={logout.isPending ? "Logging out..." : "Logout"}
+        title={logout.isPending ? "Loggar ut..." : "Logga ut"}
         onPress={() => logout.mutate()}
         disabled={logout.isPending}
       />

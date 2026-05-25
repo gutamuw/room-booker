@@ -15,15 +15,15 @@ export default function BookingScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Confirm booking</Text>
-      <Text style={styles.line}>Room: {roomId}</Text>
-      <Text style={styles.line}>Date: {date}</Text>
-      <Text style={styles.line}>Time: {slot}:00</Text>
+      <Text style={styles.title}>Bekräfta bokning</Text>
+      <Text style={styles.line}>Rum: {roomId}</Text>
+      <Text style={styles.line}>Datum: {date}</Text>
+      <Text style={styles.line}>Tid: {slot}:00</Text>
 
       {error && <Text style={styles.error}>{(error as Error).message}</Text>}
 
       <Pressable onPress={handleConfirm} disabled={isPending} style={styles.button}>
-        {isPending ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Book</Text>}
+        {isPending ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Boka</Text>}
       </Pressable>
     </View>
   );
