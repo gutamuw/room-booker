@@ -9,3 +9,7 @@ export async function findOrCreateUser(uid: string, name: string, email: string)
 
     return user;
 }
+
+export async function findUserByUid(uid: string) {
+    return User.findOne({ firebaseUid: uid });
+}

@@ -41,7 +41,7 @@ const { roomId } = req.params;
 
 }
 
-const VALID_SLOTS = [8, 9, 10, 11, 12, 13, 14, 15, 16];
+const VALID_SLOTS = [8, 9, 10, 11, 12, 13, 14, 15, 16]; // In real app, we might want to have more flexibility with start + endtime instead of given slots.
 
 export const createBooking = async (req: AuthRequest, res: Response) => {
     const { roomId } = req.params;
