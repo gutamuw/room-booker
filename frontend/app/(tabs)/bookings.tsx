@@ -14,7 +14,7 @@ export default function BookingsScreen() {
   if (isLoading) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator />
+        <ActivityIndicator color="#111111" />
       </View>
     );
   }
@@ -22,7 +22,7 @@ export default function BookingsScreen() {
   if (error || !data) {
     return (
       <View style={styles.center}>
-        <Text>Kunde inte ladda tillgänglighet.</Text>
+        <Text style={styles.errorText}>Kunde inte ladda tillgänglighet.</Text>
       </View>
     );
   }
@@ -37,6 +37,11 @@ export default function BookingsScreen() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.eyebrow}>Tillgänglighet</Text>
+        <Text style={styles.title}>Välj tid</Text>
+      </View>
+
       <DateNavigator
         fromDate={fromDate}
         toDate={toDate}
@@ -45,7 +50,8 @@ export default function BookingsScreen() {
         onPrev={() => setWindowStart(w => Math.max(0, w - WINDOW_SIZE))}
         onNext={() => setWindowStart(w => Math.min(totalDays - WINDOW_SIZE, w + WINDOW_SIZE))}
       />
-      <ScrollView contentContainerStyle={styles.list}>
+
+      <ScrollView contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
         {data.rooms.map(room => (
           <RoomAvailabilityCard
             key={room.roomId}
@@ -53,7 +59,7 @@ export default function BookingsScreen() {
             windowStart={windowStart}
             windowSize={WINDOW_SIZE}
             onSlotPress={(roomId, date, slot) =>
-              router.push({ pathname: "/booking/[roomId]", params: { roomId, date, slot} })
+              router.push({ pathname: "/booking/[roomId]", params: { roomId, date, slot } })
             }
           />
         ))}
@@ -63,8 +69,26 @@ export default function BookingsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingTop: 16 },
-  center: { flex: 1, alignItems: "center", justifyContent: "center" },
-  title: { fontSize: 24, fontWeight: "bold", paddingHorizontal: 16 },
-  list: { padding: 16 },
+  container: { flex: 1, backgroundColor: "#FFFFFF" },
+  center: { flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "#FFFFFF" },
+  errorText: { fontSize: 14, color: "#787774" },
+  header: {
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 12,
+    gap: 4,
+  },
+  eyebrow: {
+    fontSize: 11,
+    letterSpacing: 2,
+    color: "#787774",
+    textTransform: "uppercase",
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "600",
+    color: "#111111",
+    letterSpacing: -0.6,
+  },
+  list: { paddingHorizontal: 20, paddingTop: 8, paddingBottom: 32 },
 });

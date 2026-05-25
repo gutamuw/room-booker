@@ -9,13 +9,20 @@ interface Props {
   onSlotPress?: (roomId: string, date: string, slot: number) => void;
 }
 
-export default function RoomAvailabilityCard({ room, windowStart, windowSize, onSlotPress }: Props) {
+export default function RoomAvailabilityCard({
+  room,
+  windowStart,
+  windowSize,
+  onSlotPress,
+}: Props) {
   const days = room.days.slice(windowStart, windowStart + windowSize);
 
   return (
     <View style={styles.card}>
-      <Text style={styles.name}>{room.roomName}</Text>
-      <Text style={styles.capacity}>{room.capacity} pers</Text>
+      <View style={styles.header}>
+        <Text style={styles.name}>{room.roomName}</Text>
+        <Text style={styles.capacity}>{room.capacity} pers</Text>
+      </View>
       <View style={styles.grid}>
         {days.map(day => (
           <DayColumn
@@ -31,14 +38,36 @@ export default function RoomAvailabilityCard({ room, windowStart, windowSize, on
 
 const styles = StyleSheet.create({
   card: {
-    padding: 12,
-    marginBottom: 16,
-    borderRadius: 10,
-    backgroundColor: "#fff",
+    padding: 16,
+    marginBottom: 12,
+    borderRadius: 12,
+    backgroundColor: "#FFFFFF",
     borderWidth: 1,
-    borderColor: "#eee",
+    borderColor: "#EAEAEA",
   },
-  name: { fontSize: 18, fontWeight: "600" },
-  capacity: { fontSize: 12, color: "#666", marginBottom: 10 },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 14,
+  },
+  name: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#111111",
+    letterSpacing: -0.2,
+  },
+  capacity: {
+    fontSize: 11,
+    fontWeight: "600",
+    color: "#111111",
+    letterSpacing: 1,
+    textTransform: "uppercase",
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderWidth: 1,
+    borderColor: "#EAEAEA",
+    borderRadius: 9999,
+  },
   grid: { flexDirection: "row" },
 });

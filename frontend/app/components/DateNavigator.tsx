@@ -18,14 +18,39 @@ const formatLabel = (from?: string, to?: string) => {
   return `${fromDay}–${toDay} ${months[month - 1]}`;
 };
 
-export default function DateNavigator({ fromDate, toDate, canGoPrev, canGoNext, onPrev, onNext }: Props) {
+export default function DateNavigator({
+  fromDate,
+  toDate,
+  canGoPrev,
+  canGoNext,
+  onPrev,
+  onNext,
+}: Props) {
   return (
     <View style={styles.row}>
-      <Pressable disabled={!canGoPrev} onPress={onPrev} style={[styles.arrow, !canGoPrev && styles.disabled]}>
+      <Pressable
+        disabled={!canGoPrev}
+        onPress={onPrev}
+        style={({ pressed }) => [
+          styles.arrow,
+          !canGoPrev && styles.disabled,
+          pressed && canGoPrev && styles.pressed,
+        ]}
+      >
         <Text style={styles.arrowText}>‹</Text>
       </Pressable>
+
       <Text style={styles.label}>{formatLabel(fromDate, toDate)}</Text>
-      <Pressable disabled={!canGoNext} onPress={onNext} style={[styles.arrow, !canGoNext && styles.disabled]}>
+
+      <Pressable
+        disabled={!canGoNext}
+        onPress={onNext}
+        style={({ pressed }) => [
+          styles.arrow,
+          !canGoNext && styles.disabled,
+          pressed && canGoNext && styles.pressed,
+        ]}
+      >
         <Text style={styles.arrowText}>›</Text>
       </Pressable>
     </View>
@@ -37,18 +62,32 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
     paddingVertical: 12,
+    marginBottom: 4,
   },
   arrow: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "#f0f0f0",
+    width: 36,
+    height: 36,
+    borderRadius: 9999,
+    borderWidth: 1,
+    borderColor: "#EAEAEA",
+    backgroundColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
   },
-  disabled: { opacity: 0.3 },
-  arrowText: { fontSize: 22, fontWeight: "600" },
-  label: { fontSize: 16, fontWeight: "600" },
+  disabled: { opacity: 0.35 },
+  pressed: { backgroundColor: "#F7F6F3" },
+  label: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#111111",
+    letterSpacing: 0.2,
+  },
+  arrowText: {
+    fontSize: 20,
+    fontWeight: "500",
+    color: "#111111",
+    lineHeight: 22,
+  },
 });
