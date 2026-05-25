@@ -2,11 +2,11 @@ import { View, Text, StyleSheet } from "react-native";
 import { RoomAvailability } from "../src/hooks/useGetAvailability";
 import DayColumn from "./DayColumn";
 
-interface Props {
+type Props = {
   room: RoomAvailability;
   windowStart: number;
   windowSize: number;
-  onSlotPress?: (roomId: string, date: string, slot: number) => void;
+  onSlotPress?: (room: { id: string; name: string }, date: string, slot: number) => void;
 }
 
 export default function RoomAvailabilityCard({
@@ -28,7 +28,7 @@ export default function RoomAvailabilityCard({
           <DayColumn
             key={day.date}
             day={day}
-            onSlotPress={(date, slot) => onSlotPress?.(room.roomId, date, slot)}
+            onSlotPress={(date, slot) => onSlotPress?.({ id: room.roomId, name: room.roomName }, date, slot)}
           />
         ))}
       </View>

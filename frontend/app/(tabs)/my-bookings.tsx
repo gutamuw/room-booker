@@ -1,12 +1,32 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { parseISO, format } from "date-fns";
 import { sv } from "date-fns/locale";
+import { useState } from "react";
 import useGetBookings from "../../src/hooks/useGetBookings";
+import { formatSlot } from "../../src/utils/formatSlot";
+import useDeleteBooking from "../../src/hooks/useDeleteBooking";
+import { useActionSheet } from "../../src/hooks/useActionSheet";
+import ActionSheet from "../../components/ActionSheet";
+import PillButton from "../../components/PillButton";
 
 export default function MyBookingsScreen() {
   const { bookings } = useGetBookings();
+  const { mutate: cancelBooking } = useDeleteBooking();
+  const cancelSheet = useActionSheet();
+  const [selectedBookingId, setSelectedBookingId] = useState<string | null>(null);
+
+  const openConfirm = (bookingId: string) => {
+    setSelectedBookingId(bookingId);
+    cancelSheet.open();
+  };
+
+  const confirmCancel = () => {
+    if (selectedBookingId) cancelBooking({ bookingId: selectedBookingId });
+    cancelSheet.close();
+  };
 
   return (
+     <>
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.eyebrow}>Översikt</Text>
@@ -29,16 +49,31 @@ export default function MyBookingsScreen() {
             <View key={index} style={styles.bookingCard}>
               <View style={styles.row}>
                 <Text style={styles.roomName}>{booking.roomName}</Text>
-                <Text style={styles.timeBadge}>{booking.slot}:00</Text>
+                <Text style={styles.timeBadge}>{formatSlot(booking.slot)}</Text>
               </View>
+              <View style={styles.row}>
               <Text style={styles.dateText}>
                 {format(parseISO(booking.date), "EEEE d MMMM", { locale: sv })}
               </Text>
+              <PillButton
+                label="Avboka"
+                variant="danger"
+                onPress={() => openConfirm(booking.id)}
+              />
+              </View>
             </View>
           ))}
         </ScrollView>
       )}
     </View>
+    <ActionSheet
+      ref={cancelSheet.ref}
+      title="Avboka bokning?"
+      description="Detta går inte att ångra."
+      secondary={{ label: "Avbryt", onPress: cancelSheet.close }}
+      primary={{ label: "Avboka", onPress: confirmCancel, destructive: true }}
+    />
+</>
   );
 }
 

@@ -15,12 +15,13 @@ export const getMyBookings = async (req: AuthRequest, res: Response) => {
     }
 
     try {
-        const bookings = await Booking.find({ userId }).populate<{ roomId: IRoom }>("roomId");
+        const bookings = await Booking.find({ userId }).populate<{ room: IRoom }>("room");
 
         const bookingsTransformed: GetAllBookingsDto = {
             bookings: bookings.map(b => ({
-                roomName: b.roomId.name,
-                capacity: b.roomId.capacity,
+                id: String(b._id),
+                roomName: b.room.name,
+                capacity: b.room.capacity,
                 userId: b.userId,
                 date: b.date,
                 slot: b.slot,
@@ -41,6 +42,7 @@ export const getAvailability = async (_req: AuthRequest, res: Response) => {
     try {
         const from = startOfDay(new Date());
         const to = addDays(from, DAYS_AHEAD);
+        //List of dates, one for each day in the range from "from" to "to"
         const dates = Array.from({ length: DAYS_AHEAD }, (_, i) => ymd(addDays(from, i)));
 
         const [rooms, bookings] = await Promise.all([
@@ -52,7 +54,7 @@ export const getAvailability = async (_req: AuthRequest, res: Response) => {
             from: ymd(from),
             to: ymd(to),
             rooms: rooms.map(room => {
-                const roomBookings = bookings.filter(b => b.roomId.equals(room._id));
+                const roomBookings = bookings.filter(b => b.room.equals(room._id));
                 return {
                     roomId: String(room._id),
                     roomName: room.name,
@@ -91,13 +93,13 @@ export const createBooking = async (req: AuthRequest, res: Response) => {
     }
 
     try {
-        const alreadyBooked = await Booking.findOne({ roomId, date, slot });
+        const alreadyBooked = await Booking.findOne({ room: roomId, date, slot });
 
         if (alreadyBooked) {
             return res.status(400).json({ message: "Room is not available for the selected slot" });
         }
 
-        const newBooking = await Booking.create({ roomId, userId, date, slot });
+        const newBooking = await Booking.create({ room: roomId, userId, date, slot });
         res.status(201).json(newBooking);
     } catch (error) {
         console.error("Error creating booking:", error);

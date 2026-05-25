@@ -1,4 +1,5 @@
 export interface BookingDto {
+    id: string;
     roomName: string;
     capacity: number;
     userId: string;

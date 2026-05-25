@@ -1,11 +1,11 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { parseISO, format } from "date-fns";
 import { sv } from "date-fns/locale";
-import { DayAvailability } from "../../src/hooks/useGetAvailability";
+import { DayAvailability } from "../src/hooks/useGetAvailability";
 
 export const VALID_SLOTS = [8, 9, 10, 11, 12, 13, 14, 15, 16];
 
-interface Props {
+type Props = {
   day: DayAvailability;
   onSlotPress?: (date: string, slot: number) => void;
 }

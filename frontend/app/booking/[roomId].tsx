@@ -5,8 +5,9 @@ import { sv } from "date-fns/locale";
 import useCreateBooking from "../../src/hooks/useCreateBooking";
 
 export default function BookingScreen() {
-  const { roomId, date, slot } = useLocalSearchParams<{
-    roomId: string;
+  const { id, name, date, slot } = useLocalSearchParams<{
+    id: string;
+    name: string;
     date: string;
     slot: string;
   }>();
@@ -14,7 +15,7 @@ export default function BookingScreen() {
 
   const handleConfirm = () => {
     createBooking(
-      { roomId, date, slot: Number(slot) },
+      { roomId: id, date, slot: Number(slot) },
       { onSuccess: () => router.replace("/booking/result") },
     );
   };
@@ -38,7 +39,7 @@ export default function BookingScreen() {
       </View>
 
       <View style={styles.card}>
-        <Row label="Rum" value={roomId} />
+        <Row label="Rum" value={name} />
         <Divider />
         <Row label="Datum" value={formattedDate} capitalize />
         <Divider />

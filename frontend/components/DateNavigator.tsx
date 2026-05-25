@@ -1,6 +1,6 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 
-interface Props {
+type Props = {
   fromDate?: string;
   toDate?: string;
   canGoPrev: boolean;

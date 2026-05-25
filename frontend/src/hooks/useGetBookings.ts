@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import { apiFetch } from "../lib/api"
 
 export type Booking = {
+  id: string;
   roomName: string;
   capacity: number;
   userId: string;

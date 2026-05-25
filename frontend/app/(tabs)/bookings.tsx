@@ -58,8 +58,8 @@ export default function BookingsScreen() {
             room={room}
             windowStart={windowStart}
             windowSize={WINDOW_SIZE}
-            onSlotPress={(roomId, date, slot) =>
-              router.push({ pathname: "/booking/[roomId]", params: { roomId, date, slot } })
+            onSlotPress={(room, date, slot) =>
+              router.push({ pathname: "/booking/[roomId]", params: { id: room.id, name: room.name, date, slot } })
             }
           />
         ))}

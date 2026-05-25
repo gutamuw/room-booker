@@ -1,19 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import { apiFetch } from "../lib/api";
 
-export interface DayAvailability {
+export type DayAvailability = {
   date: string;
   availableSlots: number[];
 }
 
-export interface RoomAvailability {
+export type RoomAvailability = {
   roomId: string;
   roomName: string;
   capacity: number;
   days: DayAvailability[];
 }
 
-export interface AvailabilityResponse {
+export type AvailabilityResponse = {
   from: string;
   to: string;
   rooms: RoomAvailability[];
