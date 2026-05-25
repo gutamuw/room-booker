@@ -1,4 +1,5 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
+import { formatDateRangeLabel } from "../src/utils/formatDateRangeLabel";
 
 type Props = {
   fromDate?: string;
@@ -8,15 +9,6 @@ type Props = {
   onPrev: () => void;
   onNext: () => void;
 }
-
-const formatLabel = (from?: string, to?: string) => {
-  if (!from || !to) return "";
-  const fromDay = Number(from.slice(8, 10));
-  const toDay = Number(to.slice(8, 10));
-  const month = Number(from.slice(5, 7));
-  const months = ["jan", "feb", "mar", "apr", "maj", "jun", "jul", "aug", "sep", "okt", "nov", "dec"];
-  return `${fromDay}–${toDay} ${months[month - 1]}`;
-};
 
 export default function DateNavigator({
   fromDate,
@@ -40,7 +32,7 @@ export default function DateNavigator({
         <Text style={styles.arrowText}>‹</Text>
       </Pressable>
 
-      <Text style={styles.label}>{formatLabel(fromDate, toDate)}</Text>
+      <Text style={styles.label}>{formatDateRangeLabel(fromDate, toDate)}</Text>
 
       <Pressable
         disabled={!canGoNext}

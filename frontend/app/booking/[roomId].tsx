@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, Pressable, ActivityIndicator } from "react-native";
 import { useLocalSearchParams, router } from "expo-router";
-import { parseISO, format } from "date-fns";
-import { sv } from "date-fns/locale";
 import useCreateBooking from "../../src/hooks/useCreateBooking";
+import { formatSlot } from "../../src/utils/formatSlot";
+import { formatBookingDate } from "../../src/utils/formatBookingDate";
 
 export default function BookingScreen() {
   const { id, name, date, slot } = useLocalSearchParams<{
@@ -20,13 +20,7 @@ export default function BookingScreen() {
     );
   };
 
-  const formattedDate = (() => {
-    try {
-      return format(parseISO(date), "EEEE d MMMM", { locale: sv });
-    } catch {
-      return date;
-    }
-  })();
+  const formattedDate = formatBookingDate(date);
 
   return (
     <View style={styles.container}>
@@ -43,7 +37,7 @@ export default function BookingScreen() {
         <Divider />
         <Row label="Datum" value={formattedDate} capitalize />
         <Divider />
-        <Row label="Tid" value={`${slot}:00`} />
+        <Row label="Tid" value={formatSlot(Number(slot))} />
       </View>
 
       {error && <Text style={styles.error}>{(error as Error).message}</Text>}

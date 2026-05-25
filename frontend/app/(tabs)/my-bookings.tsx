@@ -8,6 +8,7 @@ import useDeleteBooking from "../../src/hooks/useDeleteBooking";
 import { useActionSheet } from "../../src/hooks/useActionSheet";
 import ActionSheet from "../../components/ActionSheet";
 import PillButton from "../../components/PillButton";
+import { formatBookingDate } from "../../src/utils/formatBookingDate";
 
 export default function MyBookingsScreen() {
   const { bookings } = useGetBookings();
@@ -53,7 +54,7 @@ export default function MyBookingsScreen() {
               </View>
               <View style={styles.row}>
               <Text style={styles.dateText}>
-                {format(parseISO(booking.date), "EEEE d MMMM", { locale: sv })}
+                {formatBookingDate(booking.date)}
               </Text>
               <PillButton
                 label="Avboka"
