@@ -6,6 +6,7 @@ import { GetAllBookingsDto, GetAvailabilityDto } from "../dtos/bookingDto.mts";
 import { VALID_SLOTS } from "../constants.mts";
 import Room from "../models/room.mts";
 import { addDays, format, startOfDay } from "date-fns";
+import { ymd } from "../utils/dateFormaters";
 
 export const getMyBookings = async (req: AuthRequest, res: Response) => {
     const userId = req.uid;
@@ -36,7 +37,6 @@ export const getMyBookings = async (req: AuthRequest, res: Response) => {
 }
 
 const DAYS_AHEAD = 30;
-const ymd = (d: Date) => format(d, "yyyy-MM-dd");
 
 export const getAvailability = async (_req: AuthRequest, res: Response) => {
     try {
