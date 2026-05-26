@@ -10,6 +10,7 @@ const useDeleteBooking = () => {
         }),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["bookings"] });
+            queryClient.invalidateQueries({ queryKey: ["availability"] });
         }
     })
 }

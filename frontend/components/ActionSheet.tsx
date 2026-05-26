@@ -17,10 +17,19 @@ type Props = {
 
 const ActionSheet = forwardRef<BottomSheetModal, Props>(
   ({ title, description, primary, secondary }, ref) => (
-    <BottomSheetModal ref={ref} enableDynamicSizing>
+    <BottomSheetModal
+      backgroundStyle={{
+        borderTopWidth: 1,
+        borderColor: "#e5e5e5",
+      }}
+      ref={ref}
+      enableDynamicSizing
+    >
       <BottomSheetView style={styles.content}>
         <Text style={styles.title}>{title}</Text>
-        {description ? <Text style={styles.description}>{description}</Text> : null}
+        {description ? (
+          <Text style={styles.description}>{description}</Text>
+        ) : null}
         <View style={styles.actions}>
           {secondary ? (
             <Pressable style={styles.secondary} onPress={secondary.onPress}>
@@ -28,7 +37,10 @@ const ActionSheet = forwardRef<BottomSheetModal, Props>(
             </Pressable>
           ) : null}
           <Pressable
-            style={[styles.primary, primary.destructive && styles.primaryDestructive]}
+            style={[
+              styles.primary,
+              primary.destructive && styles.primaryDestructive,
+            ]}
             onPress={primary.onPress}
           >
             <Text style={styles.primaryText}>{primary.label}</Text>
@@ -36,7 +48,7 @@ const ActionSheet = forwardRef<BottomSheetModal, Props>(
         </View>
       </BottomSheetView>
     </BottomSheetModal>
-  )
+  ),
 );
 
 export default ActionSheet;

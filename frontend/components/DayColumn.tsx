@@ -1,16 +1,18 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { parseISO, format } from "date-fns";
 import { sv } from "date-fns/locale";
 import { DayAvailability } from "../src/hooks/useGetAvailability";
+import { RoomSlot } from "./RoomSlot";
 
 export const VALID_SLOTS = [8, 9, 10, 11, 12, 13, 14, 15, 16];
 
 type Props = {
   day: DayAvailability;
-  onSlotPress?: (date: string, slot: number) => void;
-}
+  roomId: string;
+  roomName: string;
+};
 
-export default function DayColumn({ day, onSlotPress }: Props) {
+export default function DayColumn({ day, roomId, roomName }: Props) {
   const date = parseISO(day.date);
   const weekday = format(date, "EEE", { locale: sv }).toUpperCase();
   const dayNumber = format(date, "d");
@@ -21,25 +23,15 @@ export default function DayColumn({ day, onSlotPress }: Props) {
         <Text style={styles.weekday}>{weekday}</Text>
         <Text style={styles.dayNumber}>{dayNumber}</Text>
       </View>
-      {VALID_SLOTS.map(slot => {
-        const isAvailable = day.availableSlots.includes(slot);
-        return (
-          <Pressable
-            key={slot}
-            disabled={!isAvailable}
-            onPress={() => onSlotPress?.(day.date, slot)}
-            style={({ pressed }) => [
-              styles.slot,
-              isAvailable ? styles.available : styles.booked,
-              pressed && isAvailable && styles.pressed,
-            ]}
-          >
-            <Text style={isAvailable ? styles.slotText : styles.bookedText}>
-              {slot}:00
-            </Text>
-          </Pressable>
-        );
-      })}
+      {VALID_SLOTS.map(slot => (
+        <RoomSlot
+          key={slot}
+          day={day}
+          slot={slot}
+          roomId={roomId}
+          roomName={roomName}
+        />
+      ))}
     </View>
   );
 }
@@ -65,34 +57,5 @@ const styles = StyleSheet.create({
     color: "#111111",
     letterSpacing: -0.4,
     marginTop: 2,
-  },
-  slot: {
-    height: 36,
-    marginVertical: 3,
-    borderRadius: 6,
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 1,
-  },
-  available: {
-    backgroundColor: "#FFFFFF",
-    borderColor: "#111111",
-  },
-  booked: {
-    backgroundColor: "#F7F6F3",
-    borderColor: "#EAEAEA",
-  },
-  pressed: {
-    backgroundColor: "#111111",
-  },
-  slotText: {
-    color: "#111111",
-    fontSize: 12,
-    fontWeight: "500",
-  },
-  bookedText: {
-    color: "#9A9A98",
-    fontSize: 12,
-    textDecorationLine: "line-through",
   },
 });

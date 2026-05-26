@@ -3,6 +3,7 @@ import { useLocalSearchParams, router } from "expo-router";
 import useCreateBooking from "../../src/hooks/useCreateBooking";
 import { formatSlot } from "../../src/utils/formatSlot";
 import { formatBookingDate } from "../../src/utils/formatBookingDate";
+import SummaryCard from "../../components/SummaryCard";
 
 export default function BookingScreen() {
   const { id, name, date, slot } = useLocalSearchParams<{
@@ -11,7 +12,7 @@ export default function BookingScreen() {
     date: string;
     slot: string;
   }>();
-  const { mutate: createBooking, isPending, error } = useCreateBooking();
+  const { mutate: createBooking, isPending} = useCreateBooking();
 
   const handleConfirm = () => {
     createBooking(
@@ -32,15 +33,11 @@ export default function BookingScreen() {
         </Text>
       </View>
 
-      <View style={styles.card}>
-        <Row label="Rum" value={name} />
-        <Divider />
-        <Row label="Datum" value={formattedDate} capitalize />
-        <Divider />
-        <Row label="Tid" value={formatSlot(Number(slot))} />
-      </View>
-
-      {error && <Text style={styles.error}>{(error as Error).message}</Text>}
+      <SummaryCard 
+        name={name}
+        date={formattedDate}
+        slot={slot}
+      />
 
       <Pressable
         onPress={handleConfirm}
@@ -59,29 +56,6 @@ export default function BookingScreen() {
       </Pressable>
     </View>
   );
-}
-
-function Row({
-  label,
-  value,
-  capitalize,
-}: {
-  label: string;
-  value: string;
-  capitalize?: boolean;
-}) {
-  return (
-    <View style={styles.row}>
-      <Text style={styles.rowLabel}>{label}</Text>
-      <Text style={[styles.rowValue, capitalize && { textTransform: "capitalize" }]}>
-        {value}
-      </Text>
-    </View>
-  );
-}
-
-function Divider() {
-  return <View style={styles.divider} />;
 }
 
 const styles = StyleSheet.create({
@@ -110,32 +84,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#787774",
     lineHeight: 20,
-  },
-  card: {
-    borderWidth: 1,
-    borderColor: "#EAEAEA",
-    borderRadius: 12,
-    paddingHorizontal: 20,
-  },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingVertical: 16,
-  },
-  rowLabel: {
-    fontSize: 13,
-    color: "#787774",
-    letterSpacing: 0.2,
-  },
-  rowValue: {
-    fontSize: 15,
-    color: "#111111",
-    fontWeight: "500",
-  },
-  divider: {
-    height: 1,
-    backgroundColor: "#EAEAEA",
   },
   error: {
     color: "#9F2F2D",

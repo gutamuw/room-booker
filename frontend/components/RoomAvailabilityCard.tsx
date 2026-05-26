@@ -6,15 +6,9 @@ type Props = {
   room: RoomAvailability;
   windowStart: number;
   windowSize: number;
-  onSlotPress?: (room: { id: string; name: string }, date: string, slot: number) => void;
 }
 
-export default function RoomAvailabilityCard({
-  room,
-  windowStart,
-  windowSize,
-  onSlotPress,
-}: Props) {
+export default function RoomAvailabilityCard({ room, windowStart, windowSize }: Props) {
   const days = room.days.slice(windowStart, windowStart + windowSize);
 
   return (
@@ -28,7 +22,8 @@ export default function RoomAvailabilityCard({
           <DayColumn
             key={day.date}
             day={day}
-            onSlotPress={(date, slot) => onSlotPress?.({ id: room.roomId, name: room.roomName }, date, slot)}
+            roomId={room.roomId}
+            roomName={room.roomName}
           />
         ))}
       </View>
